@@ -1,92 +1,76 @@
-0.8.6.2 changes
-=============
+Bitcoin Core version 0.18.x is now available from:
 
-- Windows only: Fixes issue where network connectivity can fail.
+  <https://bitcoincore.org/bin/bitcoin-core-0.18.x/>
 
-- Cleanup of SSE2 scrypt detection.
+This is a new minor version release, including new features, various bug
+fixes and performance improvements, as well as updated translations.
 
-- Minor fixes:
-  - s/Bitcoin/Litecoin/ in the Coin Control example
-  - Fix custom build on MacOS X 10.9
-  - Fix QT5 custom build
-  - Update Debian build instructions
-  - Update Homebrew build 
+Please report bugs using the issue tracker at GitHub:
 
-0.8.6.1 changes
-=============
+  <https://github.com/bitcoin/bitcoin/issues>
 
-- Coin Control - experts only GUI selection of inputs before you send a transaction
+To receive security and update notifications, please subscribe to:
 
-- Disable Wallet - reduces memory requirements, helpful for miner or relay nodes
+  <https://bitcoincore.org/en/list/announcements/join/>
 
-- 20x reduction in default mintxfee.
+How to Upgrade
+==============
 
-- Up to 50% faster PoW validation, faster sync and reindexing.
+If you are running an older version, shut it down. Wait until it has
+completely shut down (which might take a few minutes for older
+versions), then run the installer (on Windows) or just copy over
+`/Applications/Bitcoin-Qt` (on Mac) or `bitcoind`/`bitcoin-qt` (on
+Linux).
 
-- Peers older than protocol version 70002 are disconnected.  0.8.3.7 is the oldest compatible client.
+The first time you run version 0.15.0 or newer, your chainstate database
+will be converted to a new format, which will take anywhere from a few
+minutes to half an hour, depending on the speed of your machine.
 
-- Internal miner added back to Litecoin.  setgenerate now works, although it is generally a bad idea as it is significantly slower than external CPU miners.
+Note that the block database format also changed in version 0.8.0 and
+there is no automatic upgrade code from before version 0.8 to version
+0.15.0 or later. Upgrading directly from 0.7.x and earlier without
+redownloading the blockchain is not supported.  However, as usual, old
+wallet versions are still supported.
 
-- New RPC commands: getbestblockhash and verifychain
+Compatibility
+==============
 
-- Improve fairness of the high priority transaction space per block
+Bitcoin Core is supported and extensively tested on operating systems
+using the Linux kernel, macOS 10.10+, and Windows 7 and newer. It is not
+recommended to use Bitcoin Core on unsupported systems.
 
-- OSX block chain database corruption fixes
-  - Update leveldb to 1.13
-  - Use fcntl with `F_FULLSYNC` instead of fsync on OSX
-  - Use native Darwin memory barriers
-  - Replace use of mmap in leveldb for improved reliability (only on OSX)
+Bitcoin Core should also work on most other Unix-like systems but is not
+as frequently tested on them.
 
-- Fix nodes forwarding transactions with empty vins and getting banned
+From 0.17.0 onwards, macOS <10.10 is no longer supported. 0.17.0 is
+built using Qt 5.9.x, which doesn't support versions of macOS older than
+10.10. Additionally, Bitcoin Core does not yet change appearance when
+macOS "dark mode" is activated.
 
-- Network code performance and robustness improvements
+Known issues
+============
 
-- Additional debug.log logging for diagnosis of network problems, log timestamps by default
+Wallet GUI
+----------
 
-- Fix rare GUI crash on send
+For advanced users who have both (1) enabled coin control features, and
+(2) are using multiple wallets loaded at the same time: The coin control
+input selection dialog can erroneously retain wrong-wallet state when
+switching wallets using the dropdown menu. For now, it is recommended
+not to use coin control features with multiple wallets loaded.
 
-0.8.5.1 changes
+Notable changes
 ===============
 
-Workaround negative version numbers serialization bug.
 
-Fix out-of-bounds check (Litecoin currently does not use this codepath, but we apply this
-patch just to match Bitcoin 0.8.5.)
-
-0.8.4.1 changes
-===============
-
-CVE-2013-5700 Bloom: filter crash issue - Litecoin 0.8.3.7 disabled bloom by default so was 
-unaffected by this issue, but we include their patches anyway just in case folks want to 
-enable bloomfilter=1.
-
-CVE-2013-4165: RPC password timing guess vulnerability
-
-CVE-2013-4627: Better fix for the fill-memory-with-orphaned-tx attack
-
-Fix multi-block reorg transaction resurrection.
-
-Fix non-standard disconnected transactions causing mempool orphans.  This bug could cause 
-nodes running with the -debug flag to crash, although it was lot less likely on Litecoin 
-as we disabled IsDust() in 0.8.3.x.
-
-Mac OSX: use 'FD_FULLSYNC' with LevelDB, which will (hopefully!) prevent the database 
-corruption issues have experienced on OSX.
-
-Add height parameter to getnetworkhashps.
-
-Fix Norwegian and Swedish translations.
-
-Minor efficiency improvement in block peer request handling.
+0.18.x change log
+=================
 
 
-0.8.3.7 changes
-===============
+Credits
+=======
 
-Fix CVE-2013-4627 denial of service, a memory exhaustion attack that could crash low-memory nodes.
+Thanks to everyone who directly contributed to this release:
 
-Fix a regression that caused excessive writing of the peers.dat file.
 
-Add option for bloom filtering.
-
-Fix Hebrew translation.
+As well as everyone that helped translating on [Transifex](https://www.transifex.com/projects/p/bitcoin/).
